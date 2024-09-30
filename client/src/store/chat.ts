@@ -12,7 +12,7 @@ interface ChatState {
   setIsLoading: (isLoading: boolean) => void;
 }
 export const useChatStore = create<ChatState>()((set) => ({
-  isMenuOpen: true,
+  isMenuOpen: false,
   message: null,
   messages: [],
   isLoading: false,

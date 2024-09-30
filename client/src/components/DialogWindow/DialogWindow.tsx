@@ -33,7 +33,6 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
   };
   useEffect(() => {
     const handleReply = (data: MessageType) => {
-      console.log('🚀 ~ chatSocket.on ~ data:', data);
       if (data.user.id === user?.id) {
         setMessages(data);
       }
@@ -51,13 +50,13 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
     if (isMenuOpen) {
       animate(
         scope.current,
-        { height: '100%', y: 0 },
+        { height: '100%', y: 0, opacity: 1 },
         { duration: 0.2, ease: 'linear' },
       );
     } else {
       animate(
         scope.current,
-        { height: 0, y: -60 },
+        { opacity: 0, height: 0, y: -60 },
         { duration: 0.2, ease: 'linear' },
       );
     }
@@ -67,7 +66,7 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
       className={`flex   overflow-hidden h-[500px] relative ${classNames}  overflow-y-visible bg-secondary `}
     >
       <div className="flex w-full flex-col justify-between  pb-8 pt-1 overflow-y-visible ">
-        <ul className="w-full flex flex-col justify-end overflow-y-visible gap-4   py-6 px-4">
+        <ul className="w-full flex flex-col justify-end overflow-y-visible gap-4   py-6 px-4 ">
           {messages.map(({ message, user }) => (
             <Message message={message} user={user} />
           ))}
@@ -76,7 +75,7 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
       {
         <div
           ref={scope}
-          className="chat-menu w-[calc(100%+2px)] bg-secondary absolute px-4 py-2  top-0 "
+          className="chat-menu w-[calc(100%+2px)] bg-accent absolute px-4 py-2  h-0  opacity-0"
         >
           <form action="" onSubmit={handleSubmitUser}>
             <input
