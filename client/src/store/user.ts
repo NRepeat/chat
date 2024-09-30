@@ -6,6 +6,7 @@ import { immer } from 'zustand/middleware/immer';
 interface UserState {
   user: UserType | null;
   setUser: (user: UserType) => void;
+  logoutUser: () => void;
 }
 export const useUserStore = create<UserState>()(
   immer(
@@ -13,6 +14,10 @@ export const useUserStore = create<UserState>()(
       (set) => ({
         user: null,
         setUser: (user) => set(() => ({ user: user })),
+        logoutUser: () =>
+          set((state) => {
+            state.user = null;
+          }),
       }),
       {
         name: 'user',

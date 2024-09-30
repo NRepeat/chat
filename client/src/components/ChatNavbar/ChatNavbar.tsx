@@ -1,4 +1,3 @@
-import { useChatStore } from '../../store/chat';
 import { FC } from 'react';
 import UserInfo from './UserInfo';
 import { CiMenuBurger } from 'react-icons/ci';
@@ -7,7 +6,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
 import { useUserStore } from '@/store/user';
@@ -17,18 +15,15 @@ type ChatNavbarProps = {
 };
 
 const ChatNavbar: FC<ChatNavbarProps> = ({ classNames }) => {
-  const setIsMenuOpen = useChatStore((state) => state.setIsMenuOpen);
-  const isMenuOpen = useChatStore((state) => state.isMenuOpen);
   const user = useUserStore((state) => state.user);
+  const logoutUser = useUserStore((state) => state.logoutUser);
 
   const [burgerMenuScope, animate] = useAnimate();
   const handleButtonClick = (e: boolean) => {
     if (e) {
-      // setIsMenuOpen(true);
       animate('.burger-icon', { rotateZ: 90 });
     } else {
       animate('.burger-icon', { rotateZ: 0 }, { duration: 0.2 });
-      // setIsMenuOpen(false);
     }
   };
   return (
@@ -43,20 +38,28 @@ const ChatNavbar: FC<ChatNavbarProps> = ({ classNames }) => {
             <CiMenuBurger className="burger-icon " />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-          <DropdownMenuItem>
-            <span>Profile</span>
+        <DropdownMenuContent className="w-56 ">
+          <DropdownMenuItem className="justify-center h-8">
+            Profile
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <span>Friends</span>
+          <DropdownMenuItem className="justify-center h-8">
+            Friends
           </DropdownMenuItem>
           {user?.username ? (
-            <DropdownMenuItem>
-              <span>Logout</span>
+            <DropdownMenuItem className="bg-red-700 h-8 overflow-hidden">
+              <Button
+                className="w-full rounded-sm "
+                variant={'link'}
+                onClick={() => logoutUser()}
+              >
+                Logout
+              </Button>
             </DropdownMenuItem>
           ) : (
-            <DropdownMenuItem>
-              <span>Login</span>
+            <DropdownMenuItem className="bg-green-700 h-8 overflow-hidden">
+              <Button className="w-full rounded-sm " variant={'link'}>
+                Login
+              </Button>
             </DropdownMenuItem>
           )}
         </DropdownMenuContent>

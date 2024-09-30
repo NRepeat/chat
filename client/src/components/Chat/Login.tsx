@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -13,12 +13,13 @@ import {
 } from '../ui/form';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
-import { useFetcher, useNavigate } from 'react-router-dom';
+import { useFetcher, useNavigate, useSearchParams } from 'react-router-dom';
 import { useUserStore } from '@/store/user';
 
 const Login = () => {
-  const fetcher = useFetcher({ key: 'login' });
   const user = useUserStore((state) => state.user);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const fetcher = useFetcher({ key: `login-${searchParams.get('client')}` });
   const setUser = useUserStore((state) => state.setUser);
   const nav = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
@@ -32,33 +33,31 @@ const Login = () => {
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const data = { test: 'test', ...values };
+    const data = { id: 'test', ...values };
     fetcher.submit(data, {
       action: '',
       encType: 'application/json',
       method: 'POST',
     });
+    form.reset();
   }
   useEffect(() => {
-    if (fetcher.state === 'idle' && fetcher.data && user) {
+    if (fetcher.state === 'idle' && fetcher.data) {
       setLoading(false);
       setUser({
-        id: user.id,
+        id: fetcher.data.id,
         status: 'online',
         avatar: '',
         username: fetcher.data.username,
       });
+      nav('/chat');
     } else if (fetcher.state === 'submitting') {
       setLoading(true);
     } else if (fetcher.state === 'loading') {
       setLoading(true);
     }
-  }, [fetcher, setUser, user]);
-  useEffect(() => {
-    if (!loading && user?.username) {
-      nav('/chat');
-    }
-  }, [loading, user, nav]);
+  }, [fetcher, setUser, user, nav]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">

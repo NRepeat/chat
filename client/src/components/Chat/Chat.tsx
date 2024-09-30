@@ -21,12 +21,11 @@ const Chat = () => {
     chatSocket.on('user-joined', (data) => {
       onConnect(data);
     });
-  }, [setUser, user]);
-  useEffect(() => {
-    if (!user?.username) {
-      nav('/chat/login');
+    if (!user) {
+      nav(`/chat/login`);
     }
-  }, [user, nav]);
+  }, [setUser, user, nav]);
+
   return (
     <div className="h-full px-12 py-8 flex justify-center items-center  overflow-hidden">
       <div className="w-[500px] min-h-[500px]  rounded-md shadow shadow-slate-900 overflow-hidden min-w-[320px]">
