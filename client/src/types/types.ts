@@ -1,4 +1,5 @@
 export type ThemeType = 'black-custom' | 'orange';
+export type UserStatus = 'online' | 'offline' | 'idle';
 
 export type ThemeButtonType = {
   color: string;
@@ -11,6 +12,8 @@ export type MessageType = {
 };
 
 export type UserType = {
-  username?: string;
   id: string;
+  status: UserStatus;
+  avatar?: string;
+  username?: string;
 };

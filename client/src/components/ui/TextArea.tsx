@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import { useChatStore } from '../store/chat';
-import { UserType } from '../types/types';
+import { useChatStore } from '../../store/chat';
+import { UserType } from '../../types/types';
 
 type TextAreaProps = {
   classNames?: string;

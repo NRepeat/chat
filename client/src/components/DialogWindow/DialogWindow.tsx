@@ -15,7 +15,6 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
   const isMenuOpen = useChatStore((state) => state.isMenuOpen);
   const user = useUserStore((state) => state.user);
   const [username, setUsername] = useState<string | undefined>('');
-  console.log('🚀 ~ username:', username);
   const setUser = useUserStore((state) => state.setUser);
   const setIsLoading = useChatStore((state) => state.setIsLoading);
   // const isChatLoading = useChatStore((state) => state.isLoading);
@@ -28,7 +27,13 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
   const handleSubmitUser = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (user?.id && username) {
-      setUser({ id: user.id, username });
+      setUser({
+        id: user.id,
+        username,
+        status: 'online',
+        avatar:
+          'https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg',
+      });
     }
   };
   useEffect(() => {
@@ -63,7 +68,7 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
   }, [isMenuOpen, animate, scope]);
   return (
     <div
-      className={`flex   overflow-hidden h-[500px] relative ${classNames}  overflow-y-visible bg-secondary `}
+      className={`flex   overflow-hidden h-[500px] relative ${classNames}  overflow-y-visible  `}
     >
       <div className="flex w-full flex-col justify-between  pb-8 pt-1 overflow-y-visible ">
         <ul className="w-full flex flex-col justify-end overflow-y-visible gap-4   py-6 px-4 ">
@@ -75,7 +80,7 @@ const DialogWindow: FC<DialogWindowProps> = ({ classNames }) => {
       {
         <div
           ref={scope}
-          className="chat-menu w-[calc(100%+2px)] bg-accent absolute px-4 py-2  h-0  opacity-0"
+          className="chat-menu w-[calc(100%+2px)]  absolute px-4 py-2  h-0  opacity-0"
         >
           <form action="" onSubmit={handleSubmitUser}>
             <input

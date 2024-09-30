@@ -8,8 +8,6 @@ export type ColorThemePickerProps = {
 };
 
 const ColorThemePicker: FC<ColorThemePickerProps> = ({ themes, theme }) => {
-  console.log('🚀 ~ themes:', themes);
-
   const changeTheme = useThemeStore((state) => state.changeTheme);
   const handleSetTheme = (theme: ThemeType) => {
     changeTheme(theme);
@@ -25,7 +23,7 @@ const ColorThemePicker: FC<ColorThemePickerProps> = ({ themes, theme }) => {
         <li key={color}>
           <button
             style={{ backgroundColor: `${color}` }}
-            className={` w-8 h-8 bg-[] rounded-[100%] border-2 border-sky-300 hover:border-sky-900`}
+            className={` w-8 h-8  rounded-[100%] border-2 border-sky-300 hover:border-sky-900`}
             onMouseEnter={() => handleToggleSetTheme(theme as ThemeType)}
             onMouseLeave={() => handleToggleSetTheme(theme as ThemeType)}
             onClick={() => handleSetTheme(theme as ThemeType)}

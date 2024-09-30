@@ -11,7 +11,7 @@ const Message: FC<MessageProps> = ({ message, user }) => {
       className={`w-full  flex   ${user.username === 'Nikita' ? 'after:bg-green-300 justify-end after:w-5' : 'before:bg-blue-200 before:w-5'}   `}
     >
       <p
-        className={` ${user.username === 'Nikita' ? 'rounded-s-md' : 'rounded-e-md '} min-w-32 py-2 px-2 flex items-center text-wrap max-w-[300px] bg-accent `}
+        className={` ${user.username === 'Nikita' ? 'rounded-s-md' : 'rounded-e-md '} min-w-32 py-2 px-2 flex items-center text-wrap max-w-[300px] `}
       >
         {wrapText(message)}
       </p>
